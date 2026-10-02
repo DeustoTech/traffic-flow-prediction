@@ -55,7 +55,7 @@ def get_args() -> argparse.Namespace:
     optim.add_argument("--epochs",        type=int,   default=10)
     optim.add_argument("--learning-rate", type=float, default=1e-4)
     optim.add_argument("--time-decay",    type=float, default=0.05)
-    optim.add_argument("--alpha",         type=float, default=0.9)
+    optim.add_argument("--time-alpha",    type=float, default=0.9)
     
     return parser.parse_args()
 
@@ -223,7 +223,7 @@ def main() -> None:
     for epoch in range(args.epochs):
         for x_batch, y_batch in train_loader:
             x, y = prepare_data(x_batch, y_batch, graph_data)
-            train_step(model, optimiser, train_metric, x, y, decay=args.time_decay, alpha=args.alpha)
+            train_step(model, optimiser, train_metric, x, y, decay=args.time_decay, alpha=args.time_alpha)
         for x_batch, y_batch in valid_loader:
             x, y = prepare_data(x_batch, y_batch, graph_data)
             evaluate(model, valid_metric, x, y)
